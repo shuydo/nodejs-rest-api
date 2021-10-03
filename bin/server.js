@@ -8,8 +8,8 @@ const { DB_HOST, PORT = 3000 } = process.env;
 
 mGoose
   .connect(DB_HOST, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+    // useNewUrlParser: true,
+    // useUnifiedTopology: true,
   })
   .then(() => {
     app.listen(PORT, () => {});

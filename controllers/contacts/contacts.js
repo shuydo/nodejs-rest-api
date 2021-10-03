@@ -1,7 +1,7 @@
 const { NotFound } = require("http-errors");
 
-const { sendSuccesRes } = require("../helpers");
-const { Contact } = require("../models");
+const { sendSuccesRes } = require("../../helpers");
+const { Contact } = require("../../models");
 
 const listContacts = async (_, res) => {
   const result = await Contact.find({}, "_id name email phone favorite");
