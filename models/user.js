@@ -52,14 +52,9 @@ const joiSchema = Joi.object({
   token: Joi.string(),
 });
 
-// const updateFavoriteJoiSchema = Joi.object({
-//   favorite: Joi.boolean().required(),
-// });
-
 const User = model("user", userSchema);
 
 module.exports = {
   joiSchema,
-  // updateFavoriteJoiSchema,
   User,
 };

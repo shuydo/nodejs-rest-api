@@ -1,26 +1,24 @@
-const { User } = require("../../models"); // const { Conflict } = require("http-errors");
+const { User } = require("../../models");
 
 const signup = async (req, res) => {
   const { email, password } = req.body;
-  console.log(req.body);
   const user = await User.findOne({ email });
 
   if (user) {
     res.status(409).json({
       status: "error",
-      code: 409, // message: "Already register",
+      code: 409,
       message: "Email in use",
     });
-    return; //!!!!!!!!!
+    return;
   }
-  // if (user) throw new Conflict("Email in use");
   const newUser = new User({ email });
   newUser.setPassword(password);
   await newUser.save();
-  
+
   res.status(201).json({
     status: "success",
-    code: 201,  // message: "Success register",
+    code: 201,
     user: {
       email,
       subscription: newUser.subscription,
