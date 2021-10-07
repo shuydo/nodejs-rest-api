@@ -1,22 +1,11 @@
-// Shuydo ShuydoM0ng0 !ShuydoM0ng0
-//mongodb+srv://Shuydo:<password>@cluster0.67xei.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
 
-// const { Schema, model } = require("mongoose");
-// const categorySchema = ({
-//   name: String,
-// });
-// const Category = model("category", categorySchema);
-
 const { DB_HOST } = process.env;
-const contactsRouter = require("./routes/api/contacts");
 
-// const newCategory = {
-//   name: "Iosif",
-//   phone: 1111111,
-// };
+const usersRouter = require("./routes/api/users");
+const contactsRouter = require("./routes/api/contacts");
 
 const app = express();
 
@@ -29,6 +18,7 @@ app.use(express.json());
 // app.use("/api/products", productsRouter);
 //api/product
 
+app.use("/api/users", usersRouter);
 app.use("/api/contacts", contactsRouter);
 
 // app.use((req, res) => {
