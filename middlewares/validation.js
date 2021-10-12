@@ -1,18 +1,10 @@
-const validation = schema => {
-  return async (req, res, next) => {
-    const { error } = schema.validate(req.body);
+const { BadRequest } = require("http-errors");
 
-    if (error) {
-      res.status(400).json({
-        status: "error",
-        code: 400,
-        message: error.message,
-      });
-      return;
-    }
-    
-    next();
-  };
+const validation = schema => async (req, _, next) => {
+  const { error } = schema.validate(req.body);
+  if (error) throw new BadRequest(error.message);
+
+  next();
 };
 
 module.exports = validation;

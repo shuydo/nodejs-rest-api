@@ -1,17 +1,44 @@
 const express = require("express");
 
 const { joiSchema } = require("../../models/user");
-const { controllerWrapper, validation, auth } = require("../../middlewares");
-const { users: ctrl } = require("../../controllers");
+const {
+  errorCatchWrapper,
+  validation,
+  auth,
+  uploadMware,
+} = require("../../middlewares");
 
+const { users: ctrl } = require("../../controllers");
 const router = express.Router();
 
-router.post("/signup", validation(joiSchema), controllerWrapper(ctrl.signup));
+router.post(
+  "/signup",
+  errorCatchWrapper(validation(joiSchema)),
+  errorCatchWrapper(ctrl.signup)
+);
+router.post(
+  "/login",
+  errorCatchWrapper(validation(joiSchema)),
+  errorCatchWrapper(ctrl.login)
+);
+router.post("/logout", auth, errorCatchWrapper(ctrl.logout));
+router.get("/logout", auth, errorCatchWrapper(ctrl.logout));
+router.get("/current", auth, errorCatchWrapper(ctrl.info));
 
-router.post("/login", validation(joiSchema), controllerWrapper(ctrl.login));
+router.patch(
+  "/avatars",
+  auth,
+  uploadMware.single("avatar"),
+  errorCatchWrapper(ctrl.avatar)
+);
 
-router.post("/logout", auth, controllerWrapper(ctrl.logout));
-
-router.get("/current", auth, controllerWrapper(ctrl.info));
+router.get("/avatars", auth, async (req, res) => {
+  res.status(200).json({
+    status: "200 OK",
+    code: "200",
+    "Content-Type": "application / json",
+    ResponseBody: { avatarURL: req.user.avatarURL },
+  });
+});
 
 module.exports = router;
