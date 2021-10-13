@@ -2,6 +2,7 @@ const { Schema, model } = require("mongoose");
 const Joi = require("joi");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const gr = require("gravatar");
 // const text = { "any.required": "missing required name field (JOI)" };
 
 const userSchema = Schema(
@@ -23,6 +24,12 @@ const userSchema = Schema(
     token: {
       type: String,
       default: null,
+    },
+    avatarURL: {
+      type: String,
+      default: function () {
+        return gr.url(this.email);
+      },
     },
   },
   { versionKey: false, timestamps: true }

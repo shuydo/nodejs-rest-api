@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="avatar"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.22.0/axios.js"></script>
+    <script>
+      const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTY1NjhhN2E3NjVkMjkzNDlhMGZmODUiLCJpYXQiOjE2MzQwMzU4OTJ9.3kYGAJsoLKBl_-kirtPtZfhAUFwwiOql8dlzAJIsxOY"
+
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+
+      axios
+        .get("http://localhost:3000/api/users/avatars/", config)
+        .then(({ data }) => {
+          if (data.code === "401") throw Error(data.message);
+          const url=data.ResponseBody.avatarURL;
+
+          const path = url.includes("gravatar")
+            ? "http:"
+            : "http://localhost:3000/";
+
+          const avatarElements = `<div>
+                    <h1>Img</h1>
+                    <img src="${path}${url}"/></div>`;
+          avatar.insertAdjacentHTML("beforeend", avatarElements);
+        })
+        .catch(error => console.log(error.message));
+    </script>
+  </body>
+</html>
