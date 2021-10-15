@@ -41,4 +41,6 @@ router.get("/avatars", auth, async (req, res) => {
   });
 });
 
+router.get("/verify/:verifyToken", errorCatchWrapper(ctrl.verify))
+
 module.exports = router;
