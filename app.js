@@ -29,7 +29,7 @@ app.use((_, res) => {
 app.use((err, _, res, next) => {
   const { status = 500, message = "Server error" } = err;
   res.status(status).json({
-    status: "error!",
+    status: "error (in app)",
     code: status,
     message,
   });
